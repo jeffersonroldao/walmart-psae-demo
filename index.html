@@ -1,8 +1,19 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>PSAE REVOLUTION - AI Robotics OS | Walmart</title>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PSAE REVOLUTION - AI Robotics OS | Walmart</title>
+    
+    <!-- 🎯 GOOGLE ANALYTICS - SEU CÓDIGO CORRETO -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-LEGLCZZN0P"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-LEGLCZZN0P');
+    </script>
+    
     <style>
         :root {
             --walmart-blue: #004c91;
@@ -363,23 +374,68 @@
             opacity: 0.8;
             flex-wrap: wrap;
         }
-        
-        /* 🎨 CRITICALITY INDICATORS */
-        .criticality-indicator {
-            display: inline-block;
-            padding: 5px 12px;
-            border-radius: 15px;
-            font-size: 0.9em;
-            font-weight: bold;
-            margin-left: 10px;
-        }
-        
-        .criticality-standard { background: #fff3cd; color: #856404; }
-        .criticality-high { background: #ffeaa7; color: #e17055; }
-        .criticality-critical { background: #f8d7da; color: #721c24; }
     </style>
 </head>
 <body>
+    <!-- 🎯 TRACKING AVANÇADO -->
+    <script>
+        // Monitoramento detalhado de acesso
+        function trackAdvancedVisit() {
+            const trackingData = {
+                // Informações básicas
+                timestamp: new Date().toISOString(),
+                url: window.location.href,
+                referrer: document.referrer,
+                
+                // Informações do usuário
+                userAgent: navigator.userAgent,
+                language: navigator.language,
+                timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+                screen: `${screen.width}x${screen.height}`,
+                viewport: `${window.innerWidth}x${window.innerHeight}`,
+                
+                // Informações de performance
+                loadTime: performance.timing.loadEventEnd - performance.timing.navigationStart
+            };
+            
+            // Envia para webhook gratuito (Pipedream)
+            fetch('https://eo8xtt6u2qvf6gg.m.pipedream.net', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(trackingData)
+            }).catch(err => console.log('Tracking ok'));
+            
+            // Track no Google Analytics também
+            gtag('event', 'page_view', {
+                page_title: 'PSAE Walmart Demo',
+                page_location: window.location.href,
+                page_referrer: document.referrer
+            });
+            
+            console.log('🔍 Tracking iniciado - PSAE Walmart Demo');
+        }
+        
+        // Track interações importantes
+        function trackInteraction(action, label) {
+            gtag('event', action, {
+                event_category: 'User Interaction',
+                event_label: label
+            });
+            console.log(`🎯 Event tracked: ${action} - ${label}`);
+        }
+        
+        // Proteção básica
+        document.addEventListener('contextmenu', e => e.preventDefault());
+        document.addEventListener('keydown', e => {
+            if ((e.ctrlKey || e.metaKey) && (e.key === 'u' || e.key === 's' || e.key === 'p')) {
+                e.preventDefault();
+            }
+        });
+        
+        // Inicializa tracking quando página carrega
+        window.addEventListener('load', trackAdvancedVisit);
+    </script>
+
     <div class="container">
         <!-- 🏆 HERO SECTION -->
         <div class="hero">
@@ -408,25 +464,25 @@
                     
                     <div class="slider-group">
                         <label>🤖 Robot Fleet Size</label>
-                        <input type="range" id="fleetSize" min="500" max="10000" value="2500" step="100">
+                        <input type="range" id="fleetSize" min="500" max="10000" value="2500" step="100" oninput="trackInteraction('slider_adjust', 'fleet_size')">
                         <div class="value-display" id="fleetSizeValue">2,500 robots</div>
                     </div>
                     
                     <div class="slider-group">
                         <label>📡 Messages Per Second</label>
-                        <input type="range" id="messageRate" min="5000" max="50000" value="15000" step="1000">
+                        <input type="range" id="messageRate" min="5000" max="50000" value="15000" step="1000" oninput="trackInteraction('slider_adjust', 'message_rate')">
                         <div class="value-display" id="messageRateValue">15,000 msg/s</div>
                     </div>
                     
                     <div class="slider-group">
                         <label>💰 Current Cloud Cost/Month</label>
-                        <input type="range" id="cloudCost" min="100000" max="2000000" value="700000" step="50000">
+                        <input type="range" id="cloudCost" min="100000" max="2000000" value="700000" step="50000" oninput="trackInteraction('slider_adjust', 'cloud_cost')">
                         <div class="value-display" id="cloudCostValue">$700,000/month</div>
                     </div>
                     
                     <div class="slider-group">
                         <label>🎯 Mission Criticality</label>
-                        <select id="criticality" style="width: 100%; padding: 12px; border-radius: 8px; border: 2px solid #ddd; font-size: 1em;">
+                        <select id="criticality" onchange="trackInteraction('dropdown_select', 'criticality')">
                             <option value="standard">🟡 Standard Operations</option>
                             <option value="high">🟠 High-Stakes Missions</option>
                             <option value="critical">🔴 Mission-Critical (Zero Failure)</option>
@@ -576,7 +632,7 @@
                         <div class="log-line">>>> Decision: Increase awareness</div>
                         <div class="log-line">>>> ✅ Resolved locally</div>
                     </div>
-                    <button onclick="addEdgeLog()" style="width: 100%; margin-top: 15px; padding: 12px; background: var(--edge-cyan); color: black; border: none; border-radius: 6px; cursor: pointer; font-weight: bold;">
+                    <button onclick="addEdgeLog(); trackInteraction('button_click', 'simulate_edge_processing')" style="width: 100%; margin-top: 15px; padding: 12px; background: var(--edge-cyan); color: black; border: none; border-radius: 6px; cursor: pointer; font-weight: bold;">
                         + Simulate Edge Processing
                     </button>
                 </div>
@@ -649,7 +705,7 @@
             <h2 style="margin-bottom: 15px; font-size: 2.2em;">Ready to Transform Your Walmart Operations?</h2>
             <p style="font-size: 1.3em; margin-bottom: 30px; opacity: 0.9;">See how PSAE can deliver <span id="ctaSavings">$2.8M</span>+ in annual savings for your last-mile automation</p>
             
-            <button class="cta-button" onclick="scheduleDemo()">
+            <button class="cta-button" onclick="scheduleDemo(); trackInteraction('button_click', 'schedule_demo')">
                 🚀 Schedule 15-Minute Technical Demo
             </button>
             
